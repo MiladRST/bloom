@@ -3,19 +3,33 @@ import styles from "./register.module.css";
 import Sms from "./Sms";
 import Swal from "sweetalert2";
 
+//react-hook-form
+import { useForm } from "react-hook-form";
+
 const Register = ({ showloginForm }) => {
-  const [isRegisterWithPass, setIsRegisterWithPass] = useState(false);
+
+  const { register,handleSubmit , formState:{ errors } } = useForm({
+    defaultValues : {
+      name: "",
+      phone: "",
+      email: "",
+      password: ""
+    }
+   })
+
+  // const [isRegisterWithPass, setIsRegisterWithPass] = useState(false);
   const [isRegisterWithOtp, setIsRegisterWithOtp] = useState(false);
 
   const hideOtpForm = () => setIsRegisterWithOtp(false);
 
-  const [name , setName] = useState("")
-  const [phone , setPhone] = useState("")
-  const [email , setEmail] = useState("")
-  const [password , setPassword] = useState("")
 
-  const signup = async () => {
-    console.log('sign up')
+
+  const signup = async (data) => {
+    
+    console.log(data)
+
+    const { name, phone, email, password } = data 
+
     const user = {
       name,
       phone,
@@ -29,11 +43,9 @@ const Register = ({ showloginForm }) => {
         "Content-Type" : "application/json"
       },
       body: JSON.stringify(user)
-    })
-    
-    const data = await res.json()
+    })    
+
     console.log(res)
-    console.log(data)
 
     if(res.status === 201) {
       Swal.fire({
@@ -48,36 +60,43 @@ const Register = ({ showloginForm }) => {
     <>
       {!isRegisterWithOtp ? (
         <>
-          <div className={styles.form}>
-            <input className={styles.input} type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            placeholder="نام" />
-            <input
-              className={styles.input}
-              value={phone}
-              onChange={ e => setPhone(e.target.value)}
+          <form className={styles.form} onSubmit={handleSubmit(signup)}>
 
+            <input 
+            {...register('name' , { required: "وارد کردن نام اجباری است" } )} 
+            className={styles.input} 
+            type="text" 
+            placeholder="نام *" />
+            { errors.name && <p className={styles.error_msg}>{errors.name.message}</p>}
+
+            <input
+              {...register('phone' , { required: "وارد کردن شماره تماس الزامی است" })}
+              className={styles.input}
               type="text"
-              placeholder="شماره موبایل  "
+              placeholder="شماره موبایل * "
             />
+            { errors.phone && <p className={styles.error_msg}>{errors.phone.message}</p>}
+
+
             <input
               className={styles.input}
-              value={email}
-              onChange={ e => setEmail(e.target.value)}
+              {...register('email' , { 
+                pattern: {
+                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g,
+                  message: "ایمیل نامعتبر می باشد!"
+                }
+              })}
               type="email"
               placeholder="ایمیل (دلخواه)"
             />
 
-            {isRegisterWithPass && (
-              <input
+
+             <input
+                {...register('password')}
                 className={styles.input}
-                value={password}
-                onChange={ e => setPassword(e.target.value)}
                 type="password"
                 placeholder="رمز عبور"
               />
-            )}
 
             <p
               style={{ marginTop: "1rem" }}
@@ -89,21 +108,15 @@ const Register = ({ showloginForm }) => {
 
             <button
               style={{ marginTop: ".7rem" }}
-              onClick={() => {
-                if(isRegisterWithPass) {
-                  signup()
-                }else {
-                  setIsRegisterWithPass(true)
-                }
-              }}
               className={styles.btn}
+              type="submit"
             >
               ثبت نام با رمزعبور
             </button>
             <p onClick={showloginForm} className={styles.back_to_login}>
               برگشت به ورود
             </p>
-          </div>
+          </form>
           <p className={styles.redirect_to_home}>لغو</p>
         </>
       ) : (

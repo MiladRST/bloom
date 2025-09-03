@@ -69,3 +69,12 @@
   font-size: 13px;
   color: rgb(52, 24, 14);
 }
+
+.error_msg {
+  display: block;
+  font-size: 12px;
+  color: red;
+  width: 100%;
+  text-align: right;
+  margin-top: 2px;
+}
