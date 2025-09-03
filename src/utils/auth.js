@@ -28,7 +28,7 @@ export const verifyAccessToken = (token) => {
     }    
 }
 
-export const generateRefreshToken = () => {
+export const generateRefreshToken = (data) => {
      const token = sign({...data}, process.env.REFRESH_TOKEN_SECRET_KEY, {
         expiresIn: "15d"
     })

@@ -3,26 +3,71 @@ import styles from "./login.module.css";
 import Link from "next/link";
 import Sms from "./Sms";
 
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+
 const Login = ({ showRegisterForm }) => {
   const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
 
   const hideOtpForm = () => setIsLoginWithOtp(false);
 
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  })
+
+  const onSubmit = async (data) => {
+    console.log('login form submitted')
+
+    console.log(data);
+    
+
+    const res = await fetch('/api/auth/signin' , {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+
+    if(res.status === 200 ) {
+      Swal.fire({
+        title: "ورود با موفقیت انجام شد!",
+        icon: "success"
+      })
+    }
+
+  }
+
   return (
     <>
       {!isLoginWithOtp ? (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.form}>
             <input
+              {...register('email' , { 
+                required: "وارد کردن ایمیل الزامی است" , 
+                pattern : {
+                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g ,
+                  message: "ایمیل نامعتبر می‌باشد"
+                }
+               })}
               className={styles.input}
               type="text"
-              placeholder="ایمیل/شماره موبایل"
+              placeholder="ایمیل *"
             />
+            { errors.email && <p className="error_msg">{errors.email.message}</p>}
+            
             <input
+              {...register('password' , { required: "وارد کردن رمز عبور الزامی است"})}
               className={styles.input}
               type="password"
-              placeholder="رمز عبور"
+              placeholder="رمز عبور *"
             />
+            { errors.password && <p className="error_msg">{errors.password.message}</p>}
+
             <div className={styles.checkbox}>
               <input type="checkbox" name="" id="" />
               <p>مرا به یاد داشته باش</p>
@@ -45,7 +90,7 @@ const Login = ({ showRegisterForm }) => {
           <Link href={"/"} className={styles.redirect_to_home}>
             لغو
           </Link>
-        </>
+        </form>
       ) : (
         <Sms hideOtpForm={hideOtpForm} />
       )}

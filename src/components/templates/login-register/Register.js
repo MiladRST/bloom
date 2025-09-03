@@ -45,7 +45,6 @@ const Register = ({ showloginForm }) => {
       body: JSON.stringify(user)
     })    
 
-    console.log(res)
 
     if(res.status === 201) {
       Swal.fire({
@@ -67,7 +66,7 @@ const Register = ({ showloginForm }) => {
             className={styles.input} 
             type="text" 
             placeholder="نام *" />
-            { errors.name && <p className={styles.error_msg}>{errors.name.message}</p>}
+            { errors.name && <p className="error_msg">{errors.name.message}</p>}
 
             <input
               {...register('phone' , { required: "وارد کردن شماره تماس الزامی است" })}
@@ -75,12 +74,13 @@ const Register = ({ showloginForm }) => {
               type="text"
               placeholder="شماره موبایل * "
             />
-            { errors.phone && <p className={styles.error_msg}>{errors.phone.message}</p>}
+            { errors.phone && <p className="error_msg">{errors.phone.message}</p>}
 
 
             <input
               className={styles.input}
-              {...register('email' , { 
+              {...register('email' , {
+                required: "وارد کردن ایمیل الزامی است",
                 pattern: {
                   value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g,
                   message: "ایمیل نامعتبر می باشد!"
