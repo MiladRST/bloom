@@ -197,3 +197,13 @@ a {
   left: unset !important;
   top: unset !important;
 }
+
+
+.error_msg {
+  display: block;
+  font-size: 12px;
+  color: red;
+  width: 100%;
+  text-align: right;
+  margin-top: 2px;
+}

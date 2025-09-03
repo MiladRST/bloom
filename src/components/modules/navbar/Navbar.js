@@ -5,7 +5,7 @@ import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
 
-function Navbar() {
+function Navbar({ isLogin }) {
   const [fixTop, setFixTop] = useState(false);
 
   useEffect(() => {
@@ -51,12 +51,8 @@ function Navbar() {
           <li>
             <Link href="/rules">قوانین</Link>
           </li>
-          {/* <li>
-            <Link href="/login-register">ورود / عضویت</Link>
-          </li> */}
-
-          {/* Start My-account section */}
-          <div className={styles.dropdown}>
+          { isLogin ? (
+            <div className={styles.dropdown}>
             <Link href="/p-user">
               <IoIosArrowDown className={styles.dropdown_icons} />
               حساب کاربری
@@ -69,8 +65,13 @@ function Navbar() {
               <Link href="/p-user/account-details">جزئیات اکانت</Link>
             </div>
           </div>
+          ) : (
+             <li>
+            <Link href="/login-register">ورود / عضویت</Link>
+          </li> 
+          )}
+          
 
-          {/* Finish My-account section */}
         </ul>
 
         <div className={styles.navbar_icons}>
