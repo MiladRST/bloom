@@ -34,7 +34,7 @@ const schema = new Schema({
   },
   score: {
     type: Number,
-    required: true,
+    default: 5,
   },
   tags: {
     type: [String],
