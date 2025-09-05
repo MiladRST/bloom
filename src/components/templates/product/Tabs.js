@@ -5,61 +5,46 @@ import { useState } from "react";
 import Description from "./Description";
 import MoreInfoes from "./MoreInfoes";
 import Comments from "./Comments";
-const Tabs = () => {
+const Tabs = ({ product }) => {
+  
   const [tab, setTab] = useState("description");
+
   return (
     <div data-aos="fade-left" className={styles.tabs}>
-      <input
-        onClick={() => setTab("description")}
-        type="radio"
-        id="description"
-        name="tab-control"
-        checked={tab == "description" && "checked"}
-      />
-      <input
-        onClick={() => setTab("moreInfoes")}
-        type="radio"
-        id="moreInfoes"
-        name="tab-control"
-        checked={tab == "moreInfoes" && "checked"}
-      />
-      <input
-        onClick={() => setTab("comments")}
-        type="radio"
-        id="comments"
-        name="tab-control"
-        checked={tab == "comments" && "checked"}
-      />
+     
       <ul>
         <li title="Features">
-          <label htmlFor="description" role="button">
+          <button onClick={() => setTab("description")}
+        className={tab === "description" && 'active'}>
             {" "}
             توضیحات{" "}
-          </label>
+          </button>
         </li>
         <li title="Delivery Contents">
-          <label htmlFor="moreInfoes" role="button">
+          <button onClick={() => setTab("moreInfoes")}
+        checked={tab === "moreInfoes" && 'active'}>
             {" "}
             اطلاعات بیشتر{" "}
-          </label>
+          </button>
         </li>
         <li title="Shipping">
-          <label htmlFor="comments" role="button">
+          <button onClick={() => setTab("comments")}
+        checked={tab === "comments" && 'active'}>
             {" "}
-            نظرات (7){" "}
-          </label>
+            نظرات ({product.comments.length}){" "}
+          </button>
         </li>
       </ul>
 
       <div className={styles.contents}>
-        <section className={styles.tabs_content}>
-          <Description />
+        <section className={`${styles.tabs_content} ${tab === "description" ? styles.active : ''}`}>
+          <Description {...product } />
         </section>
-        <section className={styles.tabs_content}>
-          <MoreInfoes />
+        <section className={`${styles.tabs_content} ${tab === "moreInfoes" ? styles.active : ''}`}>
+          <MoreInfoes {...product} />
         </section>
-        <section className={styles.tabs_content}>
-          <Comments />
+        <section className={`${styles.tabs_content} ${tab === "comments" ? styles.active : ''}`}>
+          <Comments name={product.name} comments={product.comments}/>
         </section>
       </div>
     </div>

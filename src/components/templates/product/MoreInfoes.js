@@ -1,6 +1,6 @@
 import React from "react";
 
-const MoreInfoes = () => {
+const MoreInfoes = ({ weight, smell }) => {
   return (
     <div>
       <p>اطلاعات بیشتر :</p>
@@ -8,11 +8,11 @@ const MoreInfoes = () => {
       <main>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <p>وزن</p>
-          <p>10 کیلو</p>
+          <p>{weight} گرم</p>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p>وزن</p>
-          <p>10 کیلو</p>
+          <p>بو</p>
+          <p>{smell}</p>
         </div>
       </main>
     </div>
