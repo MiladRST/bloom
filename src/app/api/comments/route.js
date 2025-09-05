@@ -1,0 +1,37 @@
+import connectToDB from "@/configs/db";
+import commentModel from "@/models/Comment";
+import productModel from "@/models/Product";
+export async function POST(req) {
+    try{
+
+        await connectToDB()
+
+        const reqBody = await req.json()
+        const {username, body, email, score, productID } = reqBody
+
+        //validation
+
+
+        const comment = await commentModel.create({
+            username, body, email, score, productID
+        })
+
+        const updateProduct = await productModel.findOneAndUpdate({
+            _id: productID
+        }, {
+            $push : {
+                comments : comment._id
+            }
+        })
+
+        return Response.json({ message: "Comment created successfully!" , data: comment }, { status: 201 })
+
+    }catch(err) {
+
+    }
+}
+
+
+export async function GET() {
+
+}
