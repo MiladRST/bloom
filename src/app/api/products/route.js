@@ -1,6 +1,8 @@
 import connectToDB from "@/configs/db";
 import ProductModel from "@/models/Product";
 
+
+
 export async function POST(req) {
   try {
     connectToDB();
