@@ -44,7 +44,7 @@ const Tabs = ({ product }) => {
           <MoreInfoes {...product} />
         </section>
         <section className={`${styles.tabs_content} ${tab === "comments" ? styles.active : ''}`}>
-          <Comments name={product.name} comments={product.comments}/>
+          <Comments productID={product._id} name={product.name} comments={product.comments}/>
         </section>
       </div>
     </div>

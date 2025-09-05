@@ -35,7 +35,7 @@ const product = async ({params}) => {
           <Gallery />
         </div>
         <Tabs product={JSON.parse(JSON.stringify(product))}/>
-        <MoreProducts />
+        {/* <MoreProducts /> */}
       </div>
     </div>
   );
