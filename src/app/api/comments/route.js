@@ -27,11 +27,13 @@ export async function POST(req) {
         return Response.json({ message: "Comment created successfully!" , data: comment }, { status: 201 })
 
     }catch(err) {
-
+        return Response.json({ message: err }, { status: 500 });
     }
 }
 
 
 export async function GET() {
-
+    await connectToDB()
+    const comments = await commentModel.find({})
+    return Response.json({ message: "" , data : comments })
 }
