@@ -1,5 +1,7 @@
+import { cookies } from "next/dist/client/components/headers";
 import { hash, compare } from "bcryptjs"
 import { sign, verify } from "jsonwebtoken"
+import UserModel from "@/models/User"
 
 export const hashPassword = async (password) => {
     const hashedPassword = await hash(password, 12)
@@ -48,4 +50,23 @@ export const validatePhone = (phone) => {
 export const validatePassword = (password) => {
     const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g;
     return pattern.test(password)
+}
+
+export const authUser = async () => {
+
+    const cookieStore = await cookies()
+  
+    const token = cookieStore.get('token')
+    let user = null 
+
+    if(token) {
+        const tokenPayload = verifyAccessToken(token.value)
+        if(tokenPayload) {
+        user = await UserModel.findOne({
+            email: tokenPayload.email
+        })
+        }
+    }
+
+    return user;
 }
