@@ -24,6 +24,12 @@ export async function POST(req) {
             return Response.json({ message: "Product id is not valid!"} , { status: 422})
         }
 
+        const isProductExist = await wishlistModel.findOne({ product })
+
+        if(isProductExist) {
+            return Response.json({ message: 'Product already exist in the wishlist!'} , { status: 422})
+        }
+
         const searchedProduct = await productModel.findOne({ _id: product })
 
         if(!searchedProduct) {
