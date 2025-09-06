@@ -24,6 +24,7 @@ const product = async ({params}) => {
     redirect('/not-found')
   }
 
+  const products = await productModel.find({ _id: { $ne: id } }).limit(8)
 
 
   
@@ -35,7 +36,7 @@ const product = async ({params}) => {
           <Gallery />
         </div>
         <Tabs product={JSON.parse(JSON.stringify(product))}/>
-        {/* <MoreProducts /> */}
+        <MoreProducts products={JSON.parse(JSON.stringify(products))}/>
       </div>
     </div>
   );
