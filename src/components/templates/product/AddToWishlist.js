@@ -10,7 +10,6 @@ const AddToWishlist = ({productID}) => {
         //check auth 
         const authRes = await fetch('/api/auth/me')
         const user = await authRes.json()
-        console.log(user)
 
         const wish = {
             user: user._id,

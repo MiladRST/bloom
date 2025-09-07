@@ -45,3 +45,32 @@ export async function POST(req) {
     }
 }
 
+
+export async function DELETE (req) {
+    try{
+        await connectToDB()
+        const body = await req.json()
+        const { user, product } = body
+
+        //validation
+        if(!isValidObjectId(user)) {
+            return Response.json({ message: "User id is not valid!"} , { status: 422})
+        }
+
+        const searchedUser = await userModel.findOne({ _id : user })
+
+        if(!searchedUser) {
+            return Response.json({ message: "User not found!"} , {status: 404})
+        }
+
+        if(!isValidObjectId(product)) {
+            return Response.json({ message: "Product id is not valid!"} , { status: 422})
+        }
+
+        const deletedWish = await wishlistModel.findOneAndDelete({})
+
+
+    }catch(err){
+
+    }
+}

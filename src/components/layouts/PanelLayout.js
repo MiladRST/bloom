@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 const PanelLayout = async ({ children }) => {
 
     const user = await authUser();
-    console.log(user);
     
     if(!user) {
         redirect('/login-register')
