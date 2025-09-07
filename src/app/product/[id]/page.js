@@ -1,3 +1,4 @@
+import MainLayout from "@/components/layouts/MainLayout";
 import styles from "@/styles/product.module.css";
 import Gallery from "@/components/templates/product/Gallery";
 import Details from "@/components/templates/product/Details";
@@ -29,16 +30,18 @@ const product = async ({params}) => {
 
   
   return (
-    <div className={styles.container}>
-      <div data-aos="fade-up" className={styles.contents}>
-        <div className={styles.main}>
-          <Details product={JSON.parse(JSON.stringify(product))} />
-          <Gallery />
+    <MainLayout>
+      <div className={styles.container}>
+        <div data-aos="fade-up" className={styles.contents}>
+          <div className={styles.main}>
+            <Details product={JSON.parse(JSON.stringify(product))} />
+            <Gallery />
+          </div>
+          <Tabs product={JSON.parse(JSON.stringify(product))}/>
+          <MoreProducts products={JSON.parse(JSON.stringify(products))}/>
         </div>
-        <Tabs product={JSON.parse(JSON.stringify(product))}/>
-        <MoreProducts products={JSON.parse(JSON.stringify(products))}/>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

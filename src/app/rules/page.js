@@ -1,15 +1,11 @@
+import MainLayout from "@/components/layouts/MainLayout";
 import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
-import Footer from "@/components/modules/footer/Footer";
-import Navbar from "@/components/modules/navbar/Navbar";
 import styles from "@/styles/rules.module.css";
-import { authUser } from "@/utils/auth";
 
 const page = async () => {
-  const user = await authUser();
 
   return (
-    <>
-      <Navbar isLogin={user ? true : false} />
+    <MainLayout>
       <Breadcrumb route={"قوانین"} />
       <div className={styles.container} data-aos="fade-up">
         <p>
@@ -64,8 +60,7 @@ const page = async () => {
         </p>
         <p>تلفن تماس و فکس: 66726563 – 021</p>
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 

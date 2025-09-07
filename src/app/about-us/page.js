@@ -1,9 +1,10 @@
+import MainLayout from "@/components/layouts/MainLayout";
 import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
 import styles from "@/styles/about-us.module.css"
 
 export default function Page(){
     return(
-        <>
+        <MainLayout>
             <Breadcrumb route={"درباره ما"} />
 
             <div className={styles.container}>
@@ -68,6 +69,6 @@ export default function Page(){
                 </div>
                 </main>
             </div>
-        </>
+        </MainLayout>
     )
 }

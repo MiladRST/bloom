@@ -1,10 +1,11 @@
 import React from "react";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import styles from "@/styles/forget-password.module.css";
 import Link from "next/link";
 
 const ForgotPassword = () => {
   return (
-    <>
+    <AuthLayout>
       <div className={styles.forgot_password}>
         <div data-aos="fade-up" className={styles.bg}>
           <div className={styles.form}>
@@ -31,7 +32,7 @@ const ForgotPassword = () => {
           />
         </section>
       </div>
-    </>
+    </AuthLayout>
   );
 };
 

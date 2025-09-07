@@ -1,7 +1,7 @@
+import MainLayout from "@/components/layouts/MainLayout";
 import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
-import Footer from "@/components/modules/footer/Footer";
-import Navbar from "@/components/modules/navbar/Navbar";
 import Product from "@/components/modules/product/Product";
+//
 import connectToDB from "@/configs/db";
 import styles from "@/styles/wishlist.module.css";
 import { authUser } from "@/utils/auth";
@@ -20,8 +20,7 @@ const page = async () => {
   }
 
   return (
-    <>
-      <Navbar />
+    <MainLayout>
       <Breadcrumb route={"علاقه مندی ها"} />
       <main className={styles.container} data-aos="fade-up">
         <p className={styles.title}>محصولات مورد علاقه شما</p>
@@ -43,8 +42,7 @@ const page = async () => {
         </div>
       )}
 
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 
