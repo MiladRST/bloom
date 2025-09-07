@@ -32,7 +32,11 @@ const Page = async () => {
                                     key={wish._id}
                                     {...wish.product}
                                 />
-                                <RemoveFromWishlist id={wish._id} title={wish.product.name}/>
+                                <RemoveFromWishlist 
+                                productID={JSON.parse(JSON.stringify(wish.product._id))} 
+                                userID={JSON.parse(JSON.stringify(user._id))} 
+                                title={wish.product.name}
+                                />
                                 
                             </div>
                         ))}

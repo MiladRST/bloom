@@ -4,6 +4,17 @@ import userModel from "@/models/User";
 import productModel from "@/models/Product";
 import { isValidObjectId } from "mongoose";
 
+export async function GET(req) {
+    try{
+        await connectToDB()
+
+        return Response.json({ message : "get all wishes related to user!"})
+        
+    }catch(err) {
+         return Response.json({ message: "Internal Server Error!" , error: err} , { status: 500 })
+    }
+}
+
 export async function POST(req) {
     try{
         const body = await req.json()
@@ -41,36 +52,8 @@ export async function POST(req) {
         return Response.json({ message: "Product added to wishlist successfully!" } , { status: 201})
 
     }catch(err){
-        return Response.json({ message: "Internal Server Error!"} , { status: 500 })
+        return Response.json({ message: "Internal Server Error!", error: err} , { status: 500 })
     }
 }
 
 
-export async function DELETE (req) {
-    try{
-        await connectToDB()
-        const body = await req.json()
-        const { user, product } = body
-
-        //validation
-        if(!isValidObjectId(user)) {
-            return Response.json({ message: "User id is not valid!"} , { status: 422})
-        }
-
-        const searchedUser = await userModel.findOne({ _id : user })
-
-        if(!searchedUser) {
-            return Response.json({ message: "User not found!"} , {status: 404})
-        }
-
-        if(!isValidObjectId(product)) {
-            return Response.json({ message: "Product id is not valid!"} , { status: 422})
-        }
-
-        const deletedWish = await wishlistModel.findOneAndDelete({})
-
-
-    }catch(err){
-
-    }
-}
