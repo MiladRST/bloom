@@ -1,5 +1,4 @@
 import styles from "@/styles/p-user/wishlist.module.css"
-import PanelLayout from "@/components/layouts/PanelLayout"
 import Product from "@/components/modules/product/Product"
 import RemoveFromWishlist from "@/components/templates/product/RemoveFromWishlist";
 //
@@ -18,7 +17,7 @@ const Page = async () => {
     console.log('wishes =>', wishes);
     
     return (
-        <PanelLayout>
+        <>
 
             <main>
                 <h1 className={styles.title}>
@@ -48,7 +47,7 @@ const Page = async () => {
                 
             </main>
            
-        </PanelLayout>
+        </>
     );
 }
 

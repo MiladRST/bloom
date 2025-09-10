@@ -1,4 +1,3 @@
-import PanelLayout from "@/components/layouts/PanelLayout"; 
 import styles from "@/styles/p-user/index.module.css";
 import Box from "@/components/templates/p-user/index/Box";
 import Tickets from "@/components/templates/p-user/index/Tickets";
@@ -6,7 +5,7 @@ import Orders from "@/components/templates/p-user/index/Orders";
 
 const page = () => {
   return (
-    <PanelLayout>
+    <>
       <main>
         <section className={styles.boxes}>
           <Box title="مجموع تیکت ها " value="20" />
@@ -19,7 +18,7 @@ const page = () => {
           <Orders />
         </section>
       </main>
-    </PanelLayout>
+    </>
   );
 };
 
