@@ -5,15 +5,32 @@ import { ImReply } from "react-icons/im";
 import { FaComments, FaHeart, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdSms, MdLogout } from "react-icons/md";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TbListDetails } from "react-icons/tb";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 const Sidebar = () => {
   const path = usePathname();
+  const router = useRouter()
 
   const logoutHandler = () => {
-    console.log("logout");
+    Swal.fire({
+      title: "از پنل کاربری خارج میشوید؟",
+      showDenyButton: true,
+      confirmButtonText: "بله",
+      denyButtonText: "خیر" ,
+    }).then( async (result) => {
+      
+      if (result.isConfirmed) {
+        const res = await fetch('/api/auth/signout' , { method: 'POST' })
+        if(res.status === 200 ) {
+            Swal.fire("خروح از حساب کاربری موفقیت آمیز بود", "", "success");
+            return router.replace('/')
+        }
+      } 
+    });
+
   };
   
   return (

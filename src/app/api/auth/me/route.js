@@ -4,27 +4,32 @@ import { cookies } from "next/headers";
 import UserModel from "@/models/User";
 
 export async function GET(req) {
-  connectToDB();
-  const token = cookies().get("token");
-  let user = null;
+  try {
+    connectToDB();
+    const token = cookies().get("token");
+    let user = null;
 
-  if (token) {
-    const tokenPayload = verifyAccessToken(token.value);
-    if (tokenPayload) {
-      user = await UserModel.findOne(
-        { email: tokenPayload.email },
-        "-password -refreshToken -__v"
+    if (token) {
+      const tokenPayload = verifyAccessToken(token.value);
+      if (tokenPayload) {
+        user = await UserModel.findOne(
+          { email: tokenPayload.email },
+          "-password -refreshToken -__v"
+        );
+      }
+
+      return Response.json(user);
+    } else {
+      return Response.json(
+        {
+          data: null,
+          message: "Not access !!",
+        },
+        { status: 401 }
       );
     }
-
-    return Response.json(user);
-  } else {
-    return Response.json(
-      {
-        data: null,
-        message: "Not access !!",
-      },
-      { status: 401 }
-    );
+  }catch(err) {
+    return Response.json({ message: "Internal Server Error!"} , { status: 500 })
   }
+  
 }
