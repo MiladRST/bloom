@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: ['mongoose']
-  },
-}
+   images: {
+        remotePatterns: [new URL('https://fakestoreapi.com/img/**')],
+    },
+};
 
 module.exports = nextConfig

@@ -1,4 +1,4 @@
-import { cookies } from "next/dist/client/components/headers";
+import { cookies } from "next/headers"
 import { hash, compare } from "bcryptjs"
 import { sign, verify } from "jsonwebtoken"
 import UserModel from "@/models/User"
