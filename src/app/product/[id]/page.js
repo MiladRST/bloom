@@ -10,10 +10,10 @@ import connectToDB from "@/configs/db";
 import productModel from "@/models/Product"
 import { isValidObjectId } from "mongoose";
 import { redirect } from "next/navigation";
+import { authUser } from "@/utils/auth";
 
 const product = async ({params}) => {
   const { id } = await params;
-  console.log(id)
   if(!isValidObjectId(id)) {
     return redirect('/not-found')
   }
@@ -27,8 +27,8 @@ const product = async ({params}) => {
 
   const products = await productModel.find({ _id: { $ne: id } }).limit(8)
 
+  const user = await authUser() 
 
-  
   return (
     <MainLayout>
       <div className={styles.container}>
@@ -37,7 +37,7 @@ const product = async ({params}) => {
             <Details product={JSON.parse(JSON.stringify(product))} />
             <Gallery />
           </div>
-          <Tabs product={JSON.parse(JSON.stringify(product))}/>
+          <Tabs product={JSON.parse(JSON.stringify(product))} user={JSON.parse(JSON.stringify(user))}/>
           <MoreProducts products={JSON.parse(JSON.stringify(products))}/>
         </div>
       </div>

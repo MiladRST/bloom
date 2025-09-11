@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import './Product'
+import './User'
 
 const { Schema } = mongoose
 
@@ -25,10 +26,18 @@ const schema = new Schema({
     default: () => Date.now(),
     immutable: false,
   },
+  isAccepted:{
+    type: Boolean,
+    default: false
+  },
   productID: {
     type: mongoose.Types.ObjectId,
     ref: "Product",
   },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 const model = mongoose.models.Comment || mongoose.model("Comment", schema);

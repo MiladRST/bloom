@@ -5,7 +5,7 @@ import Sms from "./Sms";
 
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-
+import { redirect } from "next/navigation";
 const Login = ({ showRegisterForm }) => {
   const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
 
@@ -36,6 +36,8 @@ const Login = ({ showRegisterForm }) => {
       Swal.fire({
         title: "ورود با موفقیت انجام شد!",
         icon: "success"
+      }).then(() => {
+        redirect('/')
       })
     }
 

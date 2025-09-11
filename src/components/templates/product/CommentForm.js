@@ -5,7 +5,8 @@ import styles from "./commentForm.module.css";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const CommentForm = ({ id }) => {
+const CommentForm = ({ productID, userID }) => {
+  console.log(userID);
   
   const [score, setScore ] = useState(5)
 
@@ -26,7 +27,8 @@ const CommentForm = ({ id }) => {
       body,
       email,
       score,
-      productID: id
+      productID: productID,
+      user: userID,
     }
 
     const res = await fetch('/api/comments' , {

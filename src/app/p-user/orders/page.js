@@ -1,10 +1,11 @@
-import PanelLayout from "@/components/layouts/PanelLayout";
 
 const Page = () => {
     return (
-        <div>
-            
-        </div>
+        <main>
+            <h1 >
+                <span>سفارش ها</span>
+            </h1>
+        </main>
     );
 }
 

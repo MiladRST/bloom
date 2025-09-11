@@ -16,7 +16,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="fa">
-      <body className={inter.className}>
+      <body>
         {children}
       </body>
     </html>

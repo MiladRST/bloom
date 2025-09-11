@@ -5,7 +5,7 @@ import { useState } from "react";
 import Description from "./Description";
 import MoreInfoes from "./MoreInfoes";
 import Comments from "./Comments";
-const Tabs = ({ product }) => {
+const Tabs = ({ product, user }) => {
   
   const [tab, setTab] = useState("description");
 
@@ -15,21 +15,21 @@ const Tabs = ({ product }) => {
       <ul>
         <li title="Features">
           <button onClick={() => setTab("description")}
-        className={tab === "description" && 'active'}>
+        className={tab === "description" ? 'active' : ''}>
             {" "}
             توضیحات{" "}
           </button>
         </li>
         <li title="Delivery Contents">
           <button onClick={() => setTab("moreInfoes")}
-        checked={tab === "moreInfoes" && 'active'}>
+        checked={tab === "moreInfoes" ? 'active' : ''}>
             {" "}
             اطلاعات بیشتر{" "}
           </button>
         </li>
         <li title="Shipping">
           <button onClick={() => setTab("comments")}
-        checked={tab === "comments" && 'active'}>
+        checked={tab === "comments" ? 'active' : ''}>
             {" "}
             نظرات ({product.comments.length}){" "}
           </button>
@@ -44,7 +44,7 @@ const Tabs = ({ product }) => {
           <MoreInfoes {...product} />
         </section>
         <section className={`${styles.tabs_content} ${tab === "comments" ? styles.active : ''}`}>
-          <Comments productID={product._id} name={product.name} comments={product.comments}/>
+          <Comments productID={product._id} name={product.name} comments={product.comments} user={user}/>
         </section>
       </div>
     </div>

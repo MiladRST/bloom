@@ -1,10 +1,11 @@
-import PanelLayout from "@/components/layouts/PanelLayout";
 
 const Page = () => {
     return (
-        <div>
-            tickets 
-        </div>
+        <main>
+            <h1 >
+                <span>تیکت ها</span>
+            </h1>
+        </main>
     );
 }
 

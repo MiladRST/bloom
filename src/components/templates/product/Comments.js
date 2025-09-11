@@ -2,7 +2,7 @@ import Comment from "@/components/modules/comment/Comment";
 import styles from "./comments.module.css";
 import CommentForm from "./CommentForm";
 
-const Comments = ({productID, name, comments}) => {
+const Comments = ({productID, name, comments, user}) => {
   return (
     <div>
       <p>نظرات ({comments.length}) :</p>
@@ -21,7 +21,7 @@ const Comments = ({productID, name, comments}) => {
           </div>
         </div>
         <div className={styles.form_bg}>
-          <CommentForm id={productID} />
+          <CommentForm productID={productID} userID={user ? user._id : null } />
         </div>
       </main>
     </div>

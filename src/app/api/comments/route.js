@@ -7,13 +7,13 @@ export async function POST(req) {
         await connectToDB()
 
         const reqBody = await req.json()
-        const {username, body, email, score, productID } = reqBody
+        const {username, body, email, score, productID, user } = reqBody
 
         //validation
 
 
         const comment = await commentModel.create({
-            username, body, email, score, productID
+            username, body, email, score, productID, user
         })
 
         const updateProduct = await productModel.findOneAndUpdate({
