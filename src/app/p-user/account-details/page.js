@@ -1,12 +1,11 @@
+import AccountDetails from "@/components/templates/p-user/details/AccountDetails";
 
-const Page = () => {
-    return (
-        <main>
-            <h1 >
-                <span>جزئیات اکانت</span>
-            </h1>
-        </main>
-    );
-}
+const page = () => {
+  return (
+    <>
+      <AccountDetails />
+    </>
+  );
+};
 
-export default Page;
+export default page;
