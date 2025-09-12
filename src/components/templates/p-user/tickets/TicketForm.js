@@ -1,10 +1,15 @@
 "use client"
 import { useState, useEffect } from 'react'
+import Swal from 'sweetalert2'
 
 export default function() {
 
     const [departments, setDepartments] = useState([])
-    const [subDepartment, setSubDepartment ] = useState([])
+    const [departmentID, setDepartmentID] = useState(-1)
+
+    const [subDepartments, setSubDepartments ] = useState([])
+    const [subDepartmentID, setSubDepartmentID ] = useState(-1)
+
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [priority, setPriority] = useState(1)
@@ -21,38 +26,75 @@ export default function() {
             }
             
         }
-
         getDepartments()
     } , [])
 
+    useEffect(() => {
+        const getSubDepartments = async() => {
+            const res = await fetch(`/api/departments/sub/${departmentID}`)
+            const data = await res.json()
+            console.log('res status -> ', res.status);
+            
+            if(res.status === 200 ) {
+                const { subDepartments } = data                 
+                setSubDepartments([...subDepartments])
+            }  
+        }
+        getSubDepartments()
+    }, [departmentID]);
 
+    const createTicket = async(e) => {
+        e.preventDefault()
+
+        const newTicket = {
+            title, 
+            body, 
+            priority, 
+            department : departmentID, 
+            subDepartment : subDepartmentID
+        }
+
+        const res = await fetch('/api/tickets' , {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newTicket)
+        })
+
+        if(res.status === 201 ) {
+            const data = await res.json()
+            Swal.fire({
+                title: data.message
+            })
+        }
+    }
 
     return(
-        <div>
+        <form onSubmit={createTicket}>
             <div>
                 <label htmlFor="">انتخاب دپارتمان</label>
-                <select>
-                    <option >please select one</option>
-                    { departments.map( item => <option key={item._id} value={item.title}>{item.title}</option>)}
+                <select onChange={(e) => setDepartmentID(e.target.value)}>
+                    <option value={-1}>please select one</option>
+                    { departments.map( item => <option key={item._id} value={item._id}>{item.title}</option>)}
                 </select>
             </div>
 
             <div>
                 <label htmlFor="">انتخاب ساب دپارتمان</label>
-                <select>
-                    <option >please select one</option>
-                    <option value="option1">option1</option>
-                    <option value="option2">option2</option>
+                <select onChange={(e) => setSubDepartmentID(e.target.value)}>
+                    <option value={-1}>please select one</option>
+                    { subDepartments.map( item => <option key={item._id} value={item._id}>{item.title}</option>)}
                 </select>
             </div>
 
             <div>
                 <label htmlFor="">انتخاب سطح اولویت تیکت</label>
-                <select>
+                <select onChange={e => setPriority(e.target.value)}>
                     <option >please select one</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">2</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
                 </select>
             </div>
 
@@ -65,6 +107,8 @@ export default function() {
                 <label htmlFor="">متن</label>
                 <textarea value={body} onChange={(e) => setBody(e.target.value)} />
             </div>
-        </div>
+
+            <button type="submit">create ticket</button>
+        </form>
     )
 }
