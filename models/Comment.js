@@ -26,9 +26,10 @@ const schema = new Schema({
     default: () => Date.now(),
     immutable: false,
   },
-  isAccepted:{
-    type: Boolean,
-    default: false
+  status:{
+    type: String,
+    default: 'pending',
+    enum: ['pending', 'accepted', 'rejected']
   },
   productID: {
     type: mongoose.Types.ObjectId,

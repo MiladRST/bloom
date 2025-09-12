@@ -3,6 +3,28 @@ import ticketModel from "@/models/Ticket";
 //
 import { authUser } from "@/utils/auth";
 
+export async function GET(req) {
+    try{
+
+        await connectToDB();
+
+        const user = await authUser()
+
+        if(!user) {
+            return Response.json({ message: "Unauthorized" } , { status: 401 })
+        }
+
+        const tickets = await ticketModel.find({ user : user._id }).populate('department')
+
+        return Response.json({ message: 'tickets data' , tickets })
+
+    }catch(err) {   
+
+        return Response.json({ message: "Internal server error" } , { status: 500 })
+
+    }
+}
+
 export async function POST(req) {
     try{
 
@@ -15,6 +37,7 @@ export async function POST(req) {
         }
 
         const reqBody = await req.json()
+
         const { title, body, priority, department, subDepartment } = reqBody
 
         //validation
@@ -31,7 +54,9 @@ export async function POST(req) {
         return Response.json({ message: "Ticket created successfully!"} , { status: 201 })
 
     }catch(err) {
-        return Response.json({ message: "" } , { status: 500 })
+
+        return Response.json({ message: "Internal server error" } , { status: 500 })
+
     }
 }
 

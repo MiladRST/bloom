@@ -19,6 +19,11 @@ const schema = new Schema({
         default: 1,
         enum: [1, 2, 3]
     },
+    status: {
+        type: String,
+        default: 'pending',
+        enum: ['pending', 'answered' , 'closed']
+    },
     user: {
         type:mongoose.Types.ObjectId,
         ref: "User",

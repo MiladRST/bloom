@@ -1,3 +1,4 @@
+import connectToDB from "@/configs/db"
 import { cookies } from "next/headers"
 import { hash, compare } from "bcryptjs"
 import { sign, verify } from "jsonwebtoken"
@@ -54,12 +55,15 @@ export const validatePassword = (password) => {
 
 export const authUser = async () => {
 
+
+
     const cookieStore = await cookies()
   
     const token = cookieStore.get('token')
     let user = null 
 
     if(token) {
+        await connectToDB()
         const tokenPayload = verifyAccessToken(token.value)
         if(tokenPayload) {
         user = await UserModel.findOne({
