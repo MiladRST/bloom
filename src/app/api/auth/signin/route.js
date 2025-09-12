@@ -42,7 +42,7 @@ export async function POST(req) {
         return Response.json({ message: "User logged-in successfully!"} , {
             status: 200,
             headers: {
-                "Set-Cookie" : `token=${accessToken};path=/;httpOnly=true`
+                "Set-Cookie" : `token=${accessToken};path=/;httpOnly=true;max-age=${60*60*24}`
             }
         })
 
