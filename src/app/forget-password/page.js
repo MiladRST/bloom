@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const ForgotPassword = () => {
   return (
-    <AuthLayout>
+    <>
       <div className={styles.forgot_password}>
         <div data-aos="fade-up" className={styles.bg}>
           <div className={styles.form}>
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
           />
         </section>
       </div>
-    </AuthLayout>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 "use client";
-import AuthLayout from "@/components/layouts/AuthLayout";
 import styles from "@/styles/login-register.module.css";
 import { useState } from "react";
 import { authTypes } from "@/utils/constants";
@@ -14,7 +13,7 @@ const login_register = () => {
   const showloginForm = () => setAuthType(authTypes.LOGIN);
 
   return (
-    <AuthLayout>
+    <>
 
       <div className={styles.login_register}>
         <div className={styles.form_bg} data-aos="fade-up">
@@ -31,7 +30,7 @@ const login_register = () => {
           />
         </section>
       </div>
-    </AuthLayout>
+    </>
   );
 };
 
