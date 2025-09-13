@@ -1,37 +1,15 @@
-"use client";
-
 import styles from "./sidebar.module.css";
 import { ImReply } from "react-icons/im";
 import { FaComments, FaHeart, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { MdOutlineAttachMoney } from "react-icons/md";
-import { MdSms, MdLogout } from "react-icons/md";
-import { usePathname, useRouter } from "next/navigation";
+import { MdSms } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import Link from "next/link";
-import Swal from "sweetalert2";
+import LogoutHandler from "../general/LogoutHandler";
 
 const Sidebar = () => {
-  const path = usePathname();
-  const router = useRouter()
 
-  const logoutHandler = () => {
-    Swal.fire({
-      title: "از پنل کاربری خارج میشوید؟",
-      showDenyButton: true,
-      confirmButtonText: "بله",
-      denyButtonText: "خیر" ,
-    }).then( async (result) => {
-      
-      if (result.isConfirmed) {
-        const res = await fetch('/api/auth/signout' , { method: 'POST' })
-        if(res.status === 200 ) {
-            Swal.fire("خروح از حساب کاربری موفقیت آمیز بود", "", "success");
-            return router.replace('/')
-        }
-      } 
-    });
 
-  };
   
   return (
     <aside className={styles.sidebar}>
@@ -39,8 +17,7 @@ const Sidebar = () => {
         <p>خوش اومدی شاهین عزیز</p>
       </div>
       <ul className={styles.sidebar_main}>
-        {path.includes("/p-user") ? (
-          <>
+      <>
             <Link href={"/p-user"} className={styles.sidebar_link_active}>
               <ImReply />
               پیشخوان
@@ -66,41 +43,9 @@ const Sidebar = () => {
               جزئیات اکانت
             </Link>
           </>
-        ) : (
-          <>
-            <Link href={"/p-admin"} className={styles.sidebar_link_active}>
-              <ImReply />
-              پیشخوان
-            </Link>
-
-            <Link href={"/p-admin/products"}>
-              <FaShoppingBag />
-              محصولات
-            </Link>
-            <Link href={"/p-admin/users"}>
-              <FaUsers />
-              کاربران
-            </Link>
-            <Link href={"/p-admin/comments"}>
-              <FaComments />
-              کامنت ها
-            </Link>
-
-            <Link href={"/p-admin/tickets"}>
-              <MdSms />
-              تیکت ها
-            </Link>
-            <Link href={"/p-admin/discount"}>
-              <MdOutlineAttachMoney />
-              تخفیفات
-            </Link>
-          </>
-        )}
       </ul>
-      <div className={styles.logout} onClick={logoutHandler}>
-        <MdLogout />
-        خروج
-      </div>
+      
+      <LogoutHandler />
     </aside>
   );
 };
