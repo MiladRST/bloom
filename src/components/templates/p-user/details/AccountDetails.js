@@ -4,10 +4,11 @@ import styles from "@/styles/p-user/accountDetails.module.css";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdOutlineDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 function AccountDetails() {
 
-
+  const router = useRouter()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -49,7 +50,7 @@ function AccountDetails() {
         confirmButtonText: "فهمیدم",
       }).then(async () => {
         await fetch("/api/auth/signout", { method: "POST" });
-        location.replace("/login-register");
+        router.replace("/login-register");
       });
     }
   };
