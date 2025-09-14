@@ -1,5 +1,6 @@
 import connectToDB from "@/configs/db"
 import userModel from "@/models/User"
+import Table from "@/components/modules/p-admin/users/Table"
 
 export default async function() {
     await connectToDB()
@@ -10,32 +11,11 @@ export default async function() {
         <>
             <h1>p-admin/users</h1>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Index</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        users.map( (user, index) => {
-                            return(
-                                <tr key={user._id}>
-                                    <td>{index+1}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
-                                    <td>{user.role}</td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+            { users?.length === 0 ? (
+                <p>No user available</p>
+            ) : (
+                <Table users={JSON.parse(JSON.stringify(users))} />
+            )}
 
         </>
     )
