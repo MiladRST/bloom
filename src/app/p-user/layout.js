@@ -17,7 +17,7 @@ const PanelLayout = async ({ children }) => {
     return(
         <div className={styles.layout}>
             <section className={styles.section}>
-                <Sidebar />
+                <Sidebar user={user ? JSON.parse(JSON.stringify(user)) : null} />
                 <div className={styles.contents}>
                 <Topbar />
                 {children}

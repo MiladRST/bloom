@@ -24,6 +24,10 @@ const schema = new Schema({
         default: 'pending',
         enum: ['pending', 'answered' , 'closed']
     },
+    isAnswer: {
+        type: Boolean,
+        default: false
+    },
     user: {
         type:mongoose.Types.ObjectId,
         ref: "User",
@@ -38,6 +42,11 @@ const schema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "SubDepartment",
         required: true
+    },
+    mainTicket: {
+        type: mongoose.Types.ObjectId,
+        ref: "Ticket",
+        required: false
     }
 })
 

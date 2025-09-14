@@ -7,14 +7,12 @@ import { TbListDetails } from "react-icons/tb";
 import Link from "next/link";
 import LogoutHandler from "../general/LogoutHandler";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
 
-
-  
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebar_header}>
-        <p>خوش اومدی شاهین عزیز</p>
+        <p>خوش اومدی {user.name} عزیز</p>
       </div>
       <ul className={styles.sidebar_main}>
       <>
