@@ -1,5 +1,6 @@
 "use client"
 import Swal from "sweetalert2"
+import Link from "next/link";
 
 export default function Table({ tickets }) {
 
@@ -32,7 +33,11 @@ export default function Table({ tickets }) {
                             <tr key={ticket._id}>
                                 <td>{index+1}</td>
                                 <td>{ticket.user.name}</td>
-                                <td>{ticket.title}</td>
+                                <td>
+                                    <Link href={`/p-admin/tickets/${ticket._id}`}>
+                                    {ticket.title}
+                                    </Link>
+                                </td>
                                 <td>{ticket.department.title }</td>
                                 <td>
                                     <button type="button" onClick={() => showDetails(ticket)}>

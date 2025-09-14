@@ -1,7 +1,7 @@
-// "use client"
+//"use client"
+import Link from "next/link";
 
-
-export default async function({ tickets }) {
+export default function({ tickets }) {
 
     return(
         <div>
@@ -23,7 +23,9 @@ export default async function({ tickets }) {
                             return(
                                 <tr key={ticket._id}>
                                     <td>{index+1}</td>
-                                    <td>{ticket.title}</td>
+                                    <td>
+                                        <Link href={`/p-user/tickets/${ticket._id}`}>{ticket.title}</Link>
+                                    </td>
                                     <td style={{maxWidth: '400px'}}>{ticket.body}</td>
                                     <td>{ticket.priority}</td>
                                     <td>{ticket.status}</td>
