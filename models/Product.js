@@ -40,6 +40,10 @@ const schema = new Schema({
     type: [String],
     required: true,
   },
+   img: {
+    type: String, // img src
+    required: true,
+  },
   comments: {
     type: [
       {
