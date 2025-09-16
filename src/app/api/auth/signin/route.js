@@ -5,11 +5,11 @@ import { generateAccessToken, generateRefreshToken, validateEmail, validatePassw
 export async function POST(req) {
     try{
         const body = await req.json()
-        console.log(body);
         
         const { email, password } = body 
 
         const isValidEmail = validateEmail(email)
+
         const isValidPassword = true //validatePassword(password)
 
         if(!isValidEmail || !isValidPassword) {
@@ -23,7 +23,6 @@ export async function POST(req) {
         if(!user) {
             return Response.json({ message: "User is not available!"} , {status: 422})
         }
-        console.log("password =>" , password);
         
         const isCorrectPassword = await verifyPassword(password, user.password)
 
@@ -35,15 +34,18 @@ export async function POST(req) {
         const refreshToken = generateRefreshToken({email})
 
         //set refresh-token
-        const updatedUser = await UserModel.findOneAndUpdate({ email } , {
+        await UserModel.findOneAndUpdate({ email } , {
             $set : { refreshToken } 
         })
 
+        const headers = new Headers()
+
+        headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true;max-age=${60*15}`)
+        //headers.append("Set-Cookie", `refresh-token=${refreshToken};path=/;httpOnly=true;max-age=${60*60*24*10}`)
+
         return Response.json({ message: "User logged-in successfully!"} , {
             status: 200,
-            headers: {
-                "Set-Cookie" : `token=${accessToken};path=/;httpOnly=true;max-age=${60*60*24}`
-            }
+            headers
         })
 
     }catch(err) {
