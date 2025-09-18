@@ -8,9 +8,9 @@ import { redirect } from "next/navigation";
 const AdminLayout = async ({ children }) => {
   const user = await authUser();
 
-  if(!user) {
-      redirect('/login-register')
-  }
+  // if(!user) {
+  //     redirect('/login-register')
+  // }
   // only admin access
   if( user.role !== "ADMIN" ) {
     redirect('/p-user')

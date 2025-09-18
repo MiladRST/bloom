@@ -10,9 +10,9 @@ const PanelLayout = async ({ children }) => {
 
     const user = await authUser();
     
-    if(!user) {
-        redirect('/login-register')
-    }
+    // if(!user) {
+    //     redirect('/login-register')
+    // }
 
     return(
         <div className={styles.layout}>

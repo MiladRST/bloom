@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import api from "@/services/apiService"
 
 export default function({ ticketID, ticket }) {
 
@@ -12,13 +13,7 @@ export default function({ ticketID, ticket }) {
     const handleMessage = async(e) => {
         e.preventDefault()
 
-        const res = await fetch(`/api/tickets/${ticketID}` , {
-            method : "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({ message })
-        })
+        const res = await api.post(`/tickets/${ticketID}` , { message })
 
         if(res.status === 201 ) {
             Swal.fire({

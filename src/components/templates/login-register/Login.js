@@ -6,6 +6,9 @@ import Sms from "./Sms";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
+//
+import api from "@/services/apiService";
+
 const Login = ({ showRegisterForm }) => {
   const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
 
@@ -22,17 +25,14 @@ const Login = ({ showRegisterForm }) => {
     console.log('login form submitted')
 
     console.log(data);
+
+    const res = await api.post('/auth/signin' , data)
+
+    console.log(res)
     
-
-    const res = await fetch('/api/auth/signin' , {
-      method: "POST",
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-
     if(res.status === 200 ) {
+      console.log('xxxx');
+      
       Swal.fire({
         title: "ورود با موفقیت انجام شد!",
         icon: "success"

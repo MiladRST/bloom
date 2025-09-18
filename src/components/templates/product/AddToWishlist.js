@@ -2,14 +2,14 @@
 import React from 'react';
 import { CiHeart } from "react-icons/ci";
 import Swal from 'sweetalert2';
-
+import api from "@/services/apiService"
 
 const AddToWishlist = ({productID}) => {
 
     const handleAddToWishlist = async() => {
         //check auth 
-        const authRes = await fetch('/api/auth/me')
-        const user = await authRes.json()
+        const authRes = await api.get('/auth/me')
+        const { data: user } = authRes
 
         const wish = {
             user: user._id,
@@ -17,13 +17,9 @@ const AddToWishlist = ({productID}) => {
         }
 
         // if user is available
-        const res = await fetch('/api/wishlist' , {
-            method: 'POST',
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(wish)
-        })
+        const res = await api.post('/wishlist' , { ...wish })
+        console.log(res);
+        
 
         if(res.status === 201 ) {
             Swal.fire({

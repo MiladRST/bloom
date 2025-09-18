@@ -37,8 +37,11 @@ export async function DELETE(req) {
   try{
 
     const body = await req.json()
+    console.log('body =>' , body);
     
     const {id} = body 
+
+    
 
     if(!isValidObjectId(id)){
       return Response.json({ message: "User id is not valid!"} , { status: 422})
@@ -51,7 +54,8 @@ export async function DELETE(req) {
     return Response.json({ message: "user deleted successfully!"})
 
   }catch(err){
-
+    console.log('user:route, err=> ', err);
+    
     return Response.json({ message: err }, { status: 500 });
 
   }

@@ -3,25 +3,19 @@
 
 import { useRouter } from "next/navigation"
 import Swal from "sweetalert2"
+import api from "@/services/apiService"
 
 export default function Table({ users }) {
 
     const router = useRouter()
 
     const changeRole = async (userID) => { 
-      
-        const res = await fetch('/api/user/role' , {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ id: userID })
-        })
 
-        const data = await res.json()
+        const res = await api.put('/user/role' , { id: userID })
 
+        const {data} = res
+        
         if(res.status === 200 ) {
-
             Swal.fire({
                 title: data.message,
                 icon: "success"
@@ -42,15 +36,9 @@ export default function Table({ users }) {
             console.log(result);
             if(result.isConfirmed){
 
-                const res = await fetch('/api/user' , {
-                    method: "DELETE",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
-                    body: JSON.stringify({ id: userID })
-                })
+                const res = await api.delete('/user' , { id: userID })
 
-                const data = await res.json()
+                const {data} = res
 
                 if(res.status ===200) {
                     Swal.fire({
@@ -61,7 +49,6 @@ export default function Table({ users }) {
                     })
                 }
             }
-            
         })
     }
 
@@ -77,13 +64,7 @@ export default function Table({ users }) {
         icon: "warning"
     }).then(async (result) => {
       if (result) {
-        const res = await fetch("/api/user/ban", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, phone }),
-        });
+        const res = await api.post("/user/ban", { email, phone } );
 
         if (res.status === 200) {
           Swal.fire({

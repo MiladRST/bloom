@@ -40,10 +40,10 @@ export async function POST(req) {
 
         const headers = new Headers()
 
-        headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true;max-age=${60*15}`)
-        //headers.append("Set-Cookie", `refresh-token=${refreshToken};path=/;httpOnly=true;max-age=${60*60*24*10}`)
+        headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true;max-age=${60*15}`) // access-token 15 mins
+        headers.append("Set-Cookie", `refresh-token=${refreshToken};path=/;httpOnly=true;max-age=${60*60*24*10}`) // refresh-token 10 days
 
-        return Response.json({ message: "User logged-in successfully!"} , {
+        return Response.json({ message: "User logged-in successfully!" , user} , {
             status: 200,
             headers
         })

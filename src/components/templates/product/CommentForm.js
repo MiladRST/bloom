@@ -4,6 +4,7 @@ import { IoMdStar } from "react-icons/io";
 import styles from "./commentForm.module.css";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import api from "@/services/apiService"
 
 const CommentForm = ({ productID, userID }) => {
   console.log(userID);
@@ -31,18 +32,12 @@ const CommentForm = ({ productID, userID }) => {
       user: userID,
     }
 
-    const res = await fetch('/api/comments' , {
-      method: "POST",
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify(newCM)
-    })
+    const res = await api.post('/comments' , newCM )
 
     console.log(res)
     if(res.status === 201 ) {
       Swal.fire({
-        title: "نظر بل موفقیت ساخته شد"
+        title: "نظر با موفقیت ساخته شد"
       })
       reset()
     }

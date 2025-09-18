@@ -1,16 +1,16 @@
 import connectToDB from "@/configs/db";
-import { verifyAccessToken } from "@/utils/auth";
+import { verifyToken } from "@/utils/auth";
 import { cookies } from "next/headers";
 import UserModel from "@/models/User";
 
 export async function GET(req) {
   try {
-    connectToDB();
-    const token = cookies().get("token");
+    await connectToDB();
+    const token = await cookies().get("token");
     let user = null;
 
     if (token) {
-      const tokenPayload = verifyAccessToken(token.value);
+      const tokenPayload = verifyToken(token.value);
       if (tokenPayload) {
         user = await UserModel.findOne(
           { email: tokenPayload.email },

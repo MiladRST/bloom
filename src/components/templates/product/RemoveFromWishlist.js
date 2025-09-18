@@ -1,17 +1,20 @@
 "use client"
 
 import Swal from "sweetalert2"
+import { useRouter } from "next/navigation"
+import api from "@/services/apiService"
 
 const RemoveFromWishlist = ({ productID, userID, title}) => {
+    const router = useRouter()
+
     const handleRemove = async () => {
         console.log('removal')
-        const res = await fetch(`/api/wishlist/${productID}` , {
-            method: "DELETE"
-        })
+        const res = await api.delete(`/wishlist/${productID}`)
         
-        console.log(res)
 
         if(res.status === 200 ) {
+            router.refresh()
+
             Swal.fire(
                 {
                     title: "آیتم با موفقیت از لیست علاقع مندی ها حذف شد",

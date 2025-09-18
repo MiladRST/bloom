@@ -1,7 +1,7 @@
-import connectToDB from "@/configs/db"
 import { cookies } from "next/headers"
 import { hash, compare } from "bcryptjs"
 import { sign, verify } from "jsonwebtoken"
+import connectToDB from "@/configs/db"
 import UserModel from "@/models/User"
 
 export const hashPassword = async (password) => {
@@ -21,7 +21,14 @@ export const generateAccessToken = (data) => {
     return token
 }
 
-export const verifyAccessToken = (token) => {
+export const generateRefreshToken = (data) => {
+     const token = sign({...data}, process.env.REFRESH_TOKEN_SECRET_KEY, {
+        expiresIn: "10d"
+    })
+    return token
+}
+
+export const verifyToken = (token) => {
     try{
         const tokenPayload = verify(token, process.env.ACCESS_TOKEN_SECRET_KEY)
         return tokenPayload;
@@ -29,13 +36,6 @@ export const verifyAccessToken = (token) => {
         console.log('token is not verified!', err)
         return false
     }    
-}
-
-export const generateRefreshToken = (data) => {
-     const token = sign({...data}, process.env.REFRESH_TOKEN_SECRET_KEY, {
-        expiresIn: "15d"
-    })
-    return token
 }
 
 export const validateEmail = (email) => {
@@ -57,16 +57,25 @@ export const authUser = async () => {
 
     const cookieStore = await cookies()
   
-    const token = cookieStore.get('token')
+    const token = cookieStore.get('token')?.value
+    const refreshToken = cookieStore.get('refresh-token')?.value
     let user = null 
 
+    await connectToDB()
+    
     if(token) {
-        await connectToDB()
-        const tokenPayload = verifyAccessToken(token.value)
+        const tokenPayload = verifyToken(token)
         if(tokenPayload) {
-        user = await UserModel.findOne({
-            email: tokenPayload.email
-        })
+          user = await UserModel.findOne({
+              email: tokenPayload.email
+          })
+        }
+    } else if (refreshToken) {
+        const tokenPayload = verifyToken(refreshToken)
+        if(tokenPayload) {
+          user = await UserModel.findOne({
+              email: tokenPayload.email
+          })
         }
     }
 
@@ -81,7 +90,7 @@ export const authAdmin = async () => {
   let user = null;
 
   if (token) {
-    const tokenPayload = verifyAccessToken(token.value);
+    const tokenPayload = verifyToken(token.value);
     if (tokenPayload) {
       user = await UserModel.findOne({ email: tokenPayload.email });
       if (user.role === "ADMIN") {

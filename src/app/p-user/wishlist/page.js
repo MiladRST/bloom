@@ -26,7 +26,7 @@ const Page = async () => {
                  <div className={styles.container}>
                     {parsedWishes.length &&
                         parsedWishes.map((wish) => (
-                            <div className={styles.wrapper}>
+                            <div key={wish._id} className={styles.wrapper}>
                                 <Product
                                     key={wish._id}
                                     {...wish.product}
